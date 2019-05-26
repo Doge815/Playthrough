@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Playthrough"
         mc:Ignorable="d"
-        Title="Playthrough" Height="450" Width="800">
+        Title="Playthrough" Height="450" Width="800" Foreground="#00000000">
     <Grid>
-        <Button x:Name="BtStart" Content="Start" HorizontalAlignment="Left" Margin="10,-40,0,0" VerticalAlignment="Center" Width="75" Click="BtStart_Click"/>
-        <Button x:Name="BtStop" Content="Stop" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Center" Width="75"/>
-        <ProgressBar x:Name="pp" HorizontalAlignment="Left" Height="20" Margin="150,0,0,0" VerticalAlignment="Center" Width="100" Orientation="Horizontal"/>
+        <Button x:Name="BtStart" Content="Start" HorizontalAlignment="Center" Margin="-100,12,0,0" VerticalAlignment="Top" Width="75" Click="BtStart_Click"/>
+        <Button x:Name="BtStop" Content="Stop" HorizontalAlignment="Center" Margin="100,12,0,0" VerticalAlignment="Top" Width="75"/>
+        <ProgressBar x:Name="pp" HorizontalAlignment="Center" Height="20" Margin="0,44,0,0" VerticalAlignment="Top" Width="175" Orientation="Horizontal" Foreground="White">
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="#FF2FAE00" Offset="1"/>
+                    <GradientStop Color="#FFE8FF00" Offset="0.5"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+        </ProgressBar>
+        <Slider x:Name="zz" HorizontalAlignment="Center" Margin="0,108,0,0" VerticalAlignment="Top" Width="175"/>
 
     </Grid>
 </Window>

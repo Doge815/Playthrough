@@ -23,7 +23,7 @@ namespace Playthrough
     public partial class MainWindow : Window
     {
         private int RATE = 44100; // sample rate of the sound card
-        private int BUFFERSIZE = (int)Math.Pow(2, 11); // must be a multiple of 2
+        private int BUFFERSIZE = (int)Math.Pow(2, 16); // must be a multiple of 2
 
         public BufferedWaveProvider bwp;
         DirectSoundOut output;
@@ -52,9 +52,10 @@ namespace Playthrough
             {
                 short sample = (short)((e.Buffer[index + 1] << 8) |
                                         e.Buffer[index + 0]);
-                val += sample / 32768f;
+                val += sample / BUFFERSIZE;
             }
-            pp.Value = val;
+            pp.Value = Math.Abs(100-(val*zz.Value));
+            System.Diagnostics.Debug.Print(val.ToString());
             bwp.AddSamples(e.Buffer, 0, e.BytesRecorded);
         }
         private void BtStart_Click(object sender, RoutedEventArgs e)
