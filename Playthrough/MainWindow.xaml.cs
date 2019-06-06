@@ -42,32 +42,31 @@ namespace Playthrough
             Provider = new BufferedWaveProvider(new WaveFormat(RATE, CHANNELS));
             OutputSound.Init(Provider);
 
-            CbDevices.ItemsSource = typeof(Colors).GetProperties();
-            for (int i = 0; i < WaveIn.DeviceCount; i++)
-            {
-                WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(i);
-                dev.Add(deviceInfo.ProductName);
-            }
+            MMDeviceEnumerator names = new MMDeviceEnumerator();
+            var devices = names.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
+            foreach (var device in devices)
+                dev.Add(device.FriendlyName);
             CbDevices.ItemsSource = dev;
+            CbDevices.SelectedItem = 1;
         }
 
         void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-#if false
-            float val = 0;
-            for (int index = 0; index < e.BytesRecorded; index += 2)
+            float[] volume = new float[8];
+            for (int i = 0; i < 8; i++)
             {
-                short sample = (short)((e.Buffer[index + 1] << 8) |
-                                        e.Buffer[index + 0]);
-                val += sample / 32768f;
+                volume[i] = 0f;
+                for (int index = e.BytesRecorded*i/8; index < e.BytesRecorded*(i+1)/8; index += 2)
+                {
+                    short sample = (short)((e.Buffer[index + 1] << 8) | e.Buffer[index + 0]);
+                    float val = Math.Abs(sample / 32768f);
+                    if (val > volume[i]) volume[i] = val;
+                }
             }
-            pp.Value = Math.Abs(100-(val*zz.Value));
-            System.Diagnostics.Debug.Print(val.ToString());
-#else
             NAudio.CoreAudioApi.MMDeviceEnumerator devEnum = new NAudio.CoreAudioApi.MMDeviceEnumerator();
             NAudio.CoreAudioApi.MMDevice defaultDevice = devEnum.GetDefaultAudioEndpoint(NAudio.CoreAudioApi.DataFlow.Render, NAudio.CoreAudioApi.Role.Multimedia);
             VolumeBar.Value = (100 - (defaultDevice.AudioMeterInformation.MasterPeakValue * 100f));
-#endif
+            VolumeBar.Value = (100 - (volume[3]*100));
             Provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
         }
         private void BtStart_Click(object sender, RoutedEventArgs e)
@@ -83,6 +82,20 @@ namespace Playthrough
             VolumeBar.Value = 100;
             dev.Add(DateTime.Now.ToString());
 
+        }
+
+        private void CbDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InputSound.DeviceNumber = ((ComboBox)sender).SelectedIndex;
+        }
+
+        private void CbDevices_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MMDeviceEnumerator names = new MMDeviceEnumerator();
+            var devices = names.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
+            foreach (var device in devices)
+                dev.Add(device.FriendlyName);
+            CbDevices.ItemsSource = dev;
         }
     }
 }
