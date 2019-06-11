@@ -6,28 +6,31 @@
         xmlns:local="clr-namespace:Playthrough"
         mc:Ignorable="d"
         Title="Playthrough" Height="450" Width="800" Foreground="#00000000">
-    <Grid Background="White" Height="104
-          " Width="199" HorizontalAlignment="Center" VerticalAlignment="Top">
-        <Button x:Name="BtStart" Content="Start" HorizontalAlignment="Center" Margin="-100,12,0,0" VerticalAlignment="Top" Width="75" Click="BtStart_Click"/>
-        <Button x:Name="BtStop" Content="Stop" HorizontalAlignment="Center" Margin="100,12,0,0" VerticalAlignment="Top" Width="75"/>
-        <ProgressBar x:Name="VolumeBar" HorizontalAlignment="Center" Height="20" Margin="10,50,14,0" VerticalAlignment="Top" Width="175" Orientation="Horizontal" Foreground="White" RenderTransformOrigin="0.5,0.5" BorderBrush="White">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-            <ProgressBar.Background>
-                <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                    <GradientStop Color="Red" Offset="0"/>
-                    <GradientStop Color="#FF2FAE00" Offset="1"/>
-                    <GradientStop Color="#FFE8FF00" Offset="0.5"/>
-                </LinearGradientBrush>
-            </ProgressBar.Background>
-        </ProgressBar>
-        <Slider x:Name="VolumeMultiplier" HorizontalAlignment="Center" Margin="0,82,0,0" VerticalAlignment="Top" Width="175" Maximum="11" Height="20"/>
-
+    <Grid>
+        <Grid Background="White" Height="104
+              " Width="200" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button x:Name="BtStart" Content="Start" HorizontalAlignment="Center" Margin="-100,12,0,0" VerticalAlignment="Top" Width="75" Click="BtStart_Click"/>
+            <Button x:Name="BtStop" Content="Stop" HorizontalAlignment="Center" Margin="100,12,0,0" VerticalAlignment="Top" Width="75" Click="BtStop_Click"/>
+            <ProgressBar x:Name="VolumeBar" Value="100" HorizontalAlignment="Center" Height="20" Margin="10,50,14,0" VerticalAlignment="Top" Width="175" Orientation="Horizontal" Foreground="White" RenderTransformOrigin="0.5,0.5" BorderBrush="White">
+                <ProgressBar.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ProgressBar.RenderTransform>
+                <ProgressBar.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="#FF2FAE00" Offset="1"/>
+                        <GradientStop Color="#FFE8FF00" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </ProgressBar.Background>
+            </ProgressBar>
+            <Slider x:Name="VolumeMultiplier" HorizontalAlignment="Center" Margin="0,82,0,0" VerticalAlignment="Top" Width="175" Value="2" Maximum="11" Height="20"/>
+        </Grid>
+        <Grid Background="White" Height="104">
+        </Grid>
     </Grid>
 </Window>
